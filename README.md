@@ -1,8 +1,21 @@
 # Cat API - Arquitetura CQRS
+- **Hexagonal + CQRS** (controllers separados de **comando** e **consulta**).
+- **PostgreSQL** para persistência, **Redis** para cache de consultas.
 
-API para coleta e consulta de dados de raças de gatos usando arquitetura CQRS.
+## Justificativa Técnica
 
-## 🚀 Funcionalidades
+### Escolha do PostgreSQL
+- **Relacionamentos**: Dados estruturados com relacionamentos entre raças e imagens
+- **ACID**: Garantias de consistência para operações de escrita
+- **Performance**: Índices otimizados para consultas por temperamento e origem
+- **Escalabilidade**: Suporte a particionamento e replicação
+
+### Arquitetura CQRS
+- **Separação de responsabilidades**: Commands e Queries independentes
+- **Performance**: Otimizações específicas para leitura e escrita
+- **Escalabilidade**: Possibilidade de escalar leitura e escrita independentemente
+- **Threading**: Processamento paralelo em Commands e Queries assíncronas
+## Funcionalidades
 
 ### Coleta de Dados (Commands)
 - Coleta de raças de gatos da API externa (https://thecatapi.com/)
@@ -33,7 +46,7 @@ src/main/java/com/sencon/catapi/
 └── config/               # Configurações
 ```
 
-## 🛠️ Tecnologias
+## Tecnologias
 
 - **Java 21**
 - **Spring Boot 3.5.5**
@@ -44,12 +57,13 @@ src/main/java/com/sencon/catapi/
 - **Docker & Docker Compose**
 - **OpenAPI/Swagger** (documentação)
 
-## 🚀 Executando o Projeto
+## Executando o Projeto
 
 ### Pré-requisitos
-- Docker e Docker Compose
+- Docker
 - Java 21+ (opcional, para desenvolvimento local)
 - Maven Wrapper incluído no projeto
+- user a **URL http://ec2-100-24-9-6.compute-1.amazonaws.com:8090/ para testes em nuvem**
 
 ### Usando Docker (Recomendado)
 
@@ -87,14 +101,18 @@ docker-compose up postgres redis adminer -d
 ./mvnw spring-boot:run
 ```
 
-## 📚 Documentação da API
+## Documentação da API
 
 Após iniciar a aplicação, acesse:
 
 - **Swagger UI**: http://localhost:8090/swagger-ui.html
 - **OpenAPI JSON**: http://localhost:8090/api-docs
 
-## 🔧 Endpoints Principais
+ou:
+
+- **Swagger UI**: http://ec2-100-24-9-6.compute-1.amazonaws.com:8090/swagger-ui.html
+
+## Endpoints Principais
 
 ### Commands (Coleta de Dados)
 
@@ -154,7 +172,7 @@ GET /api/breeds/by-temperament?temperament=calm&includeImages=false
 GET /api/breeds/by-origin?origin=Egypt&includeImages=false
 ```
 
-## 🧵 Threading e Performance
+## Threading e Performance
 
 O projeto implementa processamento paralelo em:
 
@@ -191,7 +209,7 @@ GET /api/health
 - **Metrics**: http://localhost:8090/actuator/metrics
 - **Info**: http://localhost:8090/actuator/info
 
-## 🏃‍♂️ Exemplo de Uso Completo
+## Exemplo de Uso Completo
 
 1. **Iniciar aplicação:**
 ```bash
@@ -222,7 +240,7 @@ curl http://localhost:8090/api/breeds
 curl "http://localhost:8090/api/breeds/by-temperament?temperament=playful"
 ```
 
-## 🔧 Build e Configurações
+## Build e Configurações
 
 ### Compilar o Projeto
 ```bash
@@ -243,17 +261,3 @@ curl "http://localhost:8090/api/breeds/by-temperament?temperament=playful"
   - **Cache**: TTL e tamanho configuráveis
   - **API Externa**: Timeout e retry configuráveis
   - **Database**: Connection pool configurável
-
-## 📝 Justificativa Técnica
-
-### Escolha do PostgreSQL
-- **Relacionamentos**: Dados estruturados com relacionamentos entre raças e imagens
-- **ACID**: Garantias de consistência para operações de escrita
-- **Performance**: Índices otimizados para consultas por temperamento e origem
-- **Escalabilidade**: Suporte a particionamento e replicação
-
-### Arquitetura CQRS
-- **Separação de responsabilidades**: Commands e Queries independentes
-- **Performance**: Otimizações específicas para leitura e escrita
-- **Escalabilidade**: Possibilidade de escalar leitura e escrita independentemente
-- **Threading**: Processamento paralelo em Commands e Queries assíncronas
