@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-alpine AS builder
+FROM openjdk:21-jdk-alpine AS builder
 
 ENV SPRING_PROFILES_ACTIVE=docker
 WORKDIR /app
@@ -13,8 +13,7 @@ COPY src src
 
 RUN ./mvnw clean package -DskipTests
 
-# Usar imagem mais compatível para runtime
-FROM openjdk:17-jdk-slim
+FROM openjdk:21-jdk-slim
 
 RUN groupadd -r -g 1000 catapi && \
     useradd -r -u 1000 -g catapi catapi
