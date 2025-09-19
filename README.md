@@ -35,7 +35,7 @@ src/main/java/com/sencon/catapi/
 
 ## 🛠️ Tecnologias
 
-- **Java 17**
+- **Java 21**
 - **Spring Boot 3.5.5**
 - **Spring WebFlux** (para chamadas assíncronas)
 - **PostgreSQL** (banco de dados)
@@ -48,7 +48,7 @@ src/main/java/com/sencon/catapi/
 
 ### Pré-requisitos
 - Docker e Docker Compose
-- Java 17+ (opcional, para desenvolvimento local)
+- Java 21+ (opcional, para desenvolvimento local)
 - Maven Wrapper incluído no projeto
 
 ### Usando Docker (Recomendado)
