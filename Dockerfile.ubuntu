@@ -1,9 +1,7 @@
-# Alternativa usando Ubuntu - mais compatível
 FROM ubuntu:22.04 AS builder
 
-# Instalar OpenJDK 17 e Maven
 RUN apt-get update && \
-    apt-get install -y openjdk-17-jdk wget && \
+    apt-get install -y openjdk-21-jdk wget && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
