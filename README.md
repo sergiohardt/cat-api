@@ -1,4 +1,4 @@
-# Cat API - Arquitetura CQRS
+# Case Cat API - Arquitetura CQRS
 - **Hexagonal + CQRS** (controllers separados de **comando** e **consulta**).
 - **PostgreSQL** para persistência, **Redis** para cache de consultas.
 
