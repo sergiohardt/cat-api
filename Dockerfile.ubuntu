@@ -1,0 +1,44 @@
+# Alternativa usando Ubuntu - mais compatível
+FROM ubuntu:22.04 AS builder
+
+# Instalar OpenJDK 17 e Maven
+RUN apt-get update && \
+    apt-get install -y openjdk-17-jdk wget && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY pom.xml .
+COPY .mvn .mvn
+COPY mvnw .
+
+RUN chmod +x mvnw
+
+COPY src src
+
+RUN ./mvnw clean package -DskipTests
+
+# Runtime stage
+FROM ubuntu:22.04
+
+RUN apt-get update && \
+    apt-get install -y openjdk-17-jre-headless curl && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN groupadd -r -g 1000 catapi && \
+    useradd -r -u 1000 -g catapi catapi
+
+WORKDIR /app
+
+COPY --from=builder /app/target/*.jar app.jar
+
+RUN chown -R catapi:catapi /app
+
+USER catapi
+
+EXPOSE 8090
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:8090/actuator/health || exit 1
+
+ENTRYPOINT ["java", "-jar", "app.jar"]

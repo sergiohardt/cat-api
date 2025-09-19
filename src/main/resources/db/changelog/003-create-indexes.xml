@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="003-create-indexes" author="catapi">
+        
+        <!-- Índices para cat_breed -->
+        <createIndex tableName="cat_breed" indexName="idx_cat_breed_name">
+            <column name="name"/>
+        </createIndex>
+        
+        <createIndex tableName="cat_breed" indexName="idx_cat_breed_origin">
+            <column name="origin"/>
+        </createIndex>
+        
+        <createIndex tableName="cat_breed" indexName="idx_cat_breed_temperament">
+            <column name="temperament"/>
+        </createIndex>
+        
+        <createIndex tableName="cat_breed" indexName="idx_cat_breed_external_id">
+            <column name="external_id"/>
+        </createIndex>
+        
+        <!-- Índices para cat_image -->
+        <createIndex tableName="cat_image" indexName="idx_cat_image_breed_id">
+            <column name="breed_id"/>
+        </createIndex>
+        
+        <createIndex tableName="cat_image" indexName="idx_cat_image_type">
+            <column name="image_type"/>
+        </createIndex>
+        
+        <createIndex tableName="cat_image" indexName="idx_cat_image_external_id">
+            <column name="external_id"/>
+        </createIndex>
+        
+        <!-- Índice composto para consultas por tipo e raça -->
+        <createIndex tableName="cat_image" indexName="idx_cat_image_type_breed">
+            <column name="image_type"/>
+            <column name="breed_id"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="cat_breed" indexName="idx_cat_breed_name"/>
+            <dropIndex tableName="cat_breed" indexName="idx_cat_breed_origin"/>
+            <dropIndex tableName="cat_breed" indexName="idx_cat_breed_temperament"/>
+            <dropIndex tableName="cat_breed" indexName="idx_cat_breed_external_id"/>
+            <dropIndex tableName="cat_image" indexName="idx_cat_image_breed_id"/>
+            <dropIndex tableName="cat_image" indexName="idx_cat_image_type"/>
+            <dropIndex tableName="cat_image" indexName="idx_cat_image_external_id"/>
+            <dropIndex tableName="cat_image" indexName="idx_cat_image_type_breed"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
