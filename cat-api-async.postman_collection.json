@@ -1,0 +1,128 @@
+{
+  "info": {
+    "name": "Cat API - Async Endpoints",
+    "description": "Coleção para testar endpoints assíncronos da Cat API que utilizam AWS SQS e SES",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8090",
+      "type": "string"
+    },
+    {
+      "key": "email",
+      "value": "seu-email@exemplo.com",
+      "type": "string",
+      "description": "Email para receber os resultados das consultas assíncronas"
+    }
+  ],
+  "item": [
+    {
+      "name": "Async - Todas as Raças",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"includeImages\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/async/breeds/all",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "async", "breeds", "all"]
+        },
+        "description": "Solicita processamento assíncrono para listar todas as raças. Os resultados serão enviados por email."
+      },
+      "response": []
+    },
+    {
+      "name": "Async - Raça por ID",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"breedId\": \"12345678-1234-1234-1234-123456789012\",\n  \"includeImages\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/async/breeds/by-id",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "async", "breeds", "by-id"]
+        },
+        "description": "Solicita processamento assíncrono para buscar uma raça específica por ID. Os resultados serão enviados por email."
+      },
+      "response": []
+    },
+    {
+      "name": "Async - Raças por Temperamento",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"temperament\": \"Affectionate\",\n  \"includeImages\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/async/breeds/by-temperament",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "async", "breeds", "by-temperament"]
+        },
+        "description": "Solicita processamento assíncrono para buscar raças por temperamento. Os resultados serão enviados por email."
+      },
+      "response": []
+    },
+    {
+      "name": "Async - Raças por Origem",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"origin\": \"Egypt\",\n  \"includeImages\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/async/breeds/by-origin",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "async", "breeds", "by-origin"]
+        },
+        "description": "Solicita processamento assíncrono para buscar raças por origem. Os resultados serão enviados por email."
+      },
+      "response": []
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/actuator/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["actuator", "health"]
+        },
+        "description": "Verifica se a aplicação está funcionando corretamente."
+      },
+      "response": []
+    }
+  ]
+}
