@@ -1,14 +1,14 @@
 # Case Cat API - Arquitetura CQRS
-- **Hexagonal + CQRS** (controllers separados de **comando** e **consulta**).
+- **Hexagonal + DDD + CQRS** (controllers separados de **commands** e **query**).
 - **PostgreSQL** para persistência, **Redis** para cache de consultas.
 
 ## Justificativa Técnica
 
 ### Escolha do PostgreSQL
 - **Relacionamentos**: Dados estruturados com relacionamentos entre raças e imagens
-- **ACID**: Garantias de consistência para operações de escrita
 - **Performance**: Índices otimizados para consultas por temperamento e origem
 - **Escalabilidade**: Suporte a particionamento e replicação
+- **Compatibilidade**: similar ao RDS da AWS
 
 ### Arquitetura CQRS
 - **Separação de responsabilidades**: Commands e Queries independentes
